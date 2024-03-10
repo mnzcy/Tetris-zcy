@@ -7,9 +7,13 @@
             "args": [
                 "-fdiagnostics-color=always",
                 "-g",
-                "${file}",
+                "${file}","D:\\CODE\\Tetris\\Tetris.cpp",
                 "-o",
-                "${fileDirname}\\${fileBasenameNoExtension}.exe"
+                "${fileDirname}\\${fileBasenameNoExtension}.exe","D:\\CODE\\Tetris\\Block.cpp",
+                "-L",
+                "D:\\mingw64\\lib",
+                "-leasyx",
+                "-lwinmm"
             ],
             "options": {
                 "cwd": "d:\\mingw64\\bin"
