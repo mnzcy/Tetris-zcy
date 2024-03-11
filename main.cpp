@@ -3,10 +3,11 @@
 #include <iostream>
 #include <windows.h>
 #include <fstream>
+using namespace std;
 #define SETTINGS_FILE "resources/settings.txt"
 #define high_delay 100
-#define mid_delay 200
-#define low_delay 400
+#define mid_delay 150
+#define low_delay 200
 
 using namespace std;
 void init()
@@ -115,6 +116,11 @@ void set_settings(bool& bgmusic,bool& txmusic,int& delaylevel){
         }
         if(KEY_DOWN('B')) break;
     }
+    
+    ofstream file(SETTINGS_FILE);
+    file<<bgmusic<<endl;
+    file<<txmusic<<endl;
+    file<<delaylevel<<endl;
 
 }
 
@@ -172,7 +178,7 @@ int main()
             case WM_LBUTTONDOWN://检测鼠标点击按钮
                 if (msg.x >= 239 && msg.x <= 699  && msg.y >= 300 && msg.y <= 380)
                 {
-                    Tetris game(21, 10, 263, 10, 36);
+                    Tetris game(21, 10, 263, 10, 36,bgmusic,txmusic,delaylevel);
                     game.play();
                 }
                 if (msg.x >= 239 && msg.x <= 699  && msg.y >= 400 && msg.y <= 480) printrules();
