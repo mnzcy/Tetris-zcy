@@ -33,7 +33,7 @@ void Tetris::init()
     delay=normalSpeed;//间隔时间
     srand(time(NULL));//配置随机种子
     
-    initgraph(938,809);//初始化窗口
+    
     loadimage(&gamebg,"resources/bg2.png",938,809);//加载游戏背景
     imgs=Block::getImage();
 

@@ -7,7 +7,7 @@
             "args": [
                 "-fdiagnostics-color=always",
                 "-g",
-                "${file}","D:\\CODE\\Tetris\\Tetris.cpp",
+                "${file}","D:\\CODE\\Tetris\\Tetris.cpp","D:\\CODE\\Tetris\\Button.cpp",
                 "-o",
                 "${fileDirname}\\${fileBasenameNoExtension}.exe","D:\\CODE\\Tetris\\Block.cpp",
                 "-L",
