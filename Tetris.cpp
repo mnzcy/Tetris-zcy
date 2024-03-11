@@ -17,8 +17,11 @@ int Tetris::normalSpeed=500;
 int Tetris::quickSpeed=20;
 int Tetris::addScore[4]={10,40,90,160};
 int Tetris::max_level=5;
-Tetris::Tetris(int rows, int cols, int left, int top, int BlockSize):map(rows,vector<int>(cols,0))//初始化map为0
+Tetris::Tetris(int rows, int cols, int left, int top, int BlockSize,int bgmusic,int txmusic,int delaylevel):map(rows,vector<int>(cols,0))//初始化map为0
 {
+    this->bgmusic=bgmusic;
+    this->txmusic=txmusic;
+    this->delaylevel=delaylevel;
     this->rows=rows;
     this->cols=cols;
     leftMargin=left;
@@ -48,8 +51,8 @@ void Tetris::play()
 {
     
     init();
-    mciSendString("open resources/xiaochu1.mp3 alias song",NULL,0,NULL);
-    mciSendString("play resources/bg.mp3 repeat",0,0,0);
+    if(txmusic) mciSendString("open resources/xiaochu1.mp3 alias song",NULL,0,NULL);
+    if(bgmusic) mciSendString("play resources/bg.mp3 repeat",0,0,0);
     nowBlock=new Block;
     nextBlock=new Block;
 
@@ -89,11 +92,11 @@ void Tetris::keyEvent(){
     
     if(KEY_DOWN('A')){
         moveLeftRight(-1);
-        Sleep(150);
+        Sleep(delaylevel);
     }
     if(KEY_DOWN('D')){
         moveLeftRight(1);
-        Sleep(150);
+        Sleep(delaylevel);
     }
     if(KEY_DOWN('W')){
         rotate();
@@ -163,11 +166,11 @@ void Tetris::drawScore()
 void Tetris::gameover()
 {
     save_score();
-    mciSendString("stop resources/bg.mp3",0,0,0);
+    if(bgmusic) mciSendString("stop resources/bg.mp3",0,0,0);
     IMAGE over_image;
     loadimage(&over_image,"resources/over.png");
     putimage(400,400,&over_image);
-    mciSendString("play resources/over.mp3",0,0,0);
+    if(txmusic) mciSendString("play resources/over.mp3",0,0,0);
     
 }
 
@@ -229,7 +232,10 @@ void Tetris::drop(){
         delete nowBlock;
         nowBlock=nextBlock;
         nextBlock=new Block;
-        if(nowBlock->unfit(map)==false) overflag=true;
+        if(nowBlock->unfit(map)==false) {
+            delete nowBlock;
+            overflag=true;
+        }
     }
 }
 
@@ -273,7 +279,7 @@ void Tetris::clearLine(){//清行
 
     if(lineCount>0){
         score+=addScore[lineCount-1];
-        mciSendString("play resources/xiaochu1.mp3",0,0,0);
+        if(txmusic) mciSendString("play resources/xiaochu1.mp3",0,0,0);
         level=score/100;
         if(level>=max_level) level=4;
         delay=normalSpeed-level*100;

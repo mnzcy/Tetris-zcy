@@ -6,7 +6,7 @@ using namespace std;
 #define KEY_DOWN(vk_c) (GetAsyncKeyState(vk_c)&0x8000?1:0)
 class Tetris{
     public:
-        Tetris(int rows,int cols,int left,int top,int BlockSize);
+        Tetris(int rows,int cols,int left,int top,int BlockSize,int,int,int);
         void init();//初始化
         void play();//开始游戏
     private:
@@ -28,6 +28,9 @@ class Tetris{
         bool overflag;
         bool backflag;
         vector<vector<int>> map;//存储每个方块数据
+        int bgmusic;
+        int txmusic;
+        int delaylevel;
         int rows;
         int cols;
         int leftMargin;
