@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "Tetris.h"
+
 #include <conio.h>
 #include<time.h>
 #include <vector>
@@ -30,9 +31,10 @@ void Tetris::init()
     score=0;
     level=0;
     overflag=false;
+    backflag=false;
     delay=normalSpeed;//间隔时间
     srand(time(NULL));//配置随机种子
-    
+    // backui=new Button();
     
     loadimage(&gamebg,"resources/bg2.png",938,809);//加载游戏背景
     imgs=Block::getImage();
@@ -54,7 +56,7 @@ void Tetris::play()
     update=true;
 
     int timeGap=0;
-    while(1){
+    while(!backflag){
         keyEvent();
 
         timeGap+=getDelay();
@@ -73,13 +75,13 @@ void Tetris::play()
         if(overflag) {
             gameover();
             while(1){
-                 if(KEY_DOWN('N')) break;
+                 if(KEY_DOWN('N')) {newgame();break;}
+                 if(KEY_DOWN('B')) {backflag=true;break;}
             }
-            newgame();
-        }
+        
     }
 }
-
+}
 void Tetris::keyEvent(){
     unsigned char ch;
     
@@ -105,8 +107,12 @@ void Tetris::keyEvent(){
         game_pause();
         Sleep(200);
     }
+    if(KEY_DOWN('B')){
+        backflag=true;
+    }
     
 }
+
 
 
 void Tetris::moveLeftRight(int offx)
@@ -146,7 +152,7 @@ void Tetris::drawScore()
     char highestscore_char[32];
     string str_highestscore=to_string(highestscore);
     strcpy(highestscore_char,str_highestscore.c_str());
-
+    settextcolor(WHITE);
     settextstyle(40,20,"楷体");
     outtextxy(76,645,level_char);
     settextstyle(60,30,"楷体");

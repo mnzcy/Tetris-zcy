@@ -2,6 +2,7 @@
 using namespace std;
 #include <graphics.h>
 #include "Block.h"
+
 #define KEY_DOWN(vk_c) (GetAsyncKeyState(vk_c)&0x8000?1:0)
 class Tetris{
     public:
@@ -25,6 +26,7 @@ class Tetris{
         int delay;//时间间隔
         bool update;//是否渲染标志
         bool overflag;
+        bool backflag;
         vector<vector<int>> map;//存储每个方块数据
         int rows;
         int cols;
@@ -39,7 +41,6 @@ class Tetris{
         
         Block* nowBlock;
         Block* nextBlock;
-
         IMAGE **imgs;
 
         static int normalSpeed;

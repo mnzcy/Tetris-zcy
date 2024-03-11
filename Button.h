@@ -1,6 +1,4 @@
 
-
-
 class Button{
     public:
         Button(int x,int y,int w,int h,char text[]);
